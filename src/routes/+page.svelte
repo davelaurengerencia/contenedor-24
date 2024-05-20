@@ -7,11 +7,11 @@
   let selectedRollo = null;
   let filteredRollos = [];
   let selectedNW = null;
+  let selectedMTS = null;
 
   $: filteredRollos = rollos.filter(rollo => rollo.color === selectedColor);
   $: selectedNW = null; // Reset the displayed NW when color or roll changes
-    $: selectedMts = null; // Reset the displayed NW when color or roll changes
-
+  $: selectedMTS = null; // Reset the displayed MTS when color or roll changes
 
   function handleColorChange(event) {
     selectedColor = event.target.value;
@@ -22,18 +22,17 @@
     selectedRollo = event.target.value;
   }
 
-  function buscarNW() {
+  function buscarDatos() {
     if (selectedRollo) {
       const rollo = filteredRollos.find(rollo => rollo.roll_no === parseInt(selectedRollo));
       if (rollo) {
         selectedNW = rollo.nw;
+        selectedMTS = rollo.mts;
       }
     }
   }
 </script>
-<div class="container ">
-<h1 class="text-center p-4 bg-success text-light rounded fw-bold container ">CONTENEDOR 24</h1>
-</div>
+
 <div class="container">
   <select id="color" class="form-select mb-2" aria-label="Select color" on:change={handleColorChange}>
     <option selected disabled>Color</option>
@@ -51,15 +50,15 @@
     {/if}
   </select>
 
-  <button class="btn btn-primary mb-2 btn-lg" on:click={buscarNW} disabled={!selectedRollo}> 
+  <button class="btn btn-primary mb-2 btn-lg" on:click={buscarDatos} disabled={!selectedRollo}> 
     BUSCAR
   </button>
 
-  {#if selectedNW !== null}
+  {#if selectedNW !== null && selectedMTS !== null}
     <div class="text-center fs-1 bg-danger rounded text-light mb-2">
-      MTS: {selectedNW}
+      MTS: {selectedMTS}
     </div>
-      <div class="text-center fs-1 bg-warning rounded text-light fw-bold">
+    <div class="text-center fs-1 bg-warning rounded text-light">
       KG: {selectedNW}
     </div>
   {/if}
@@ -72,4 +71,8 @@
   .bg-warning {
     padding: 1rem;
   }
+  .bg-danger {
+    padding: 1rem;
+  }
 </style>
+
