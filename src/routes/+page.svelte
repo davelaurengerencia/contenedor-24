@@ -33,6 +33,10 @@
   }
 </script>
 
+<div class="container ">
+<h1 class="text-center p-4 bg-success text-light rounded fw-bold container ">CONTENEDOR 24</h1>
+</div>
+
 <div class="container">
   <select id="color" class="form-select mb-2" aria-label="Select color" on:change={handleColorChange}>
     <option selected disabled>Color</option>
