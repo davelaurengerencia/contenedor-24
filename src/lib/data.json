@@ -1,0 +1,219 @@
+[
+	{
+		"color": "CONFITE",
+		"roll_no": 1,
+		"nw": 33,
+		"gw": 33.1,
+		"mts": 93.5
+	},
+	{
+		"color": "CONFITE",
+		"roll_no": 2,
+		"nw": 32.7,
+		"gw": 32.8,
+		"mts": 92.6
+	},
+	{
+		"color": "CONFITE",
+		"roll_no": 3,
+		"nw": 33.1,
+		"gw": 33.2,
+		"mts": 95.3
+	},
+	{
+		"color": "CONFITE",
+		"roll_no": 4,
+		"nw": 33.3,
+		"gw": 33.4,
+		"mts": 94.3
+	},
+	{
+		"color": "CONFITE",
+		"roll_no": 5,
+		"nw": 34.5,
+		"gw": 34.6,
+		"mts": 98.2
+	},
+	{
+		"color": "CONFITE",
+		"roll_no": 6,
+		"nw": 32.5,
+		"gw": 32.6,
+		"mts": 92.6
+	},
+	{
+		"color": "CONFITE",
+		"roll_no": 7,
+		"nw": 32.6,
+		"gw": 32.7,
+		"mts": 92.9
+	},
+	{
+		"color": "CONFITE",
+		"roll_no": 8,
+		"nw": 32.3,
+		"gw": 32.4,
+		"mts": 92.5
+	},
+	{
+		"color": "CONFITE",
+		"roll_no": 9,
+		"nw": 32.4,
+		"gw": 32.5,
+		"mts": 93.3
+	},
+	{
+		"color": "CONFITE",
+		"roll_no": 10,
+		"nw": 33.7,
+		"gw": 33.8,
+		"mts": 97.1
+	},
+	{
+		"color": "CONFITE",
+		"roll_no": 11,
+		"nw": 32.6,
+		"gw": 32.7,
+		"mts": 95.7
+	},
+	{
+		"color": "CONFITE",
+		"roll_no": 12,
+		"nw": 40.3,
+		"gw": 40.4,
+		"mts": 123
+	},
+	{
+		"color": "CONFITE",
+		"roll_no": 13,
+		"nw": 31.5,
+		"gw": 31.6,
+		"mts": 94.9
+	},
+	{
+		"color": "CONFITE",
+		"roll_no": 14,
+		"nw": 32.7,
+		"gw": 32.8,
+		"mts": 99.3
+	},
+	{
+		"color": "VERDE AGUA",
+		"roll_no": 1,
+		"nw": 32.3,
+		"gw": 32.4,
+		"mts": 101
+	},
+	{
+		"color": "VERDE AGUA",
+		"roll_no": 2,
+		"nw": 16.2,
+		"gw": 16.3,
+		"mts": 51.7
+	},
+	{
+		"color": "VERDE AGUA",
+		"roll_no": 3,
+		"nw": 30.1,
+		"gw": 30.2,
+		"mts": 95.4
+	},
+	{
+		"color": "VERDE AGUA",
+		"roll_no": 4,
+		"nw": 33.6,
+		"gw": 33.7,
+		"mts": 109.8
+	},
+	{
+		"color": "VERDE AGUA",
+		"roll_no": 5,
+		"nw": 25.3,
+		"gw": 25.4,
+		"mts": 80
+	},
+	{
+		"color": "VERDE AGUA",
+		"roll_no": 6,
+		"nw": 22.4,
+		"gw": 22.5,
+		"mts": 73.3
+	},
+	{
+		"color": "VERDE AGUA",
+		"roll_no": 7,
+		"nw": 31.5,
+		"gw": 31.6,
+		"mts": 101.7
+	},
+	{
+		"color": "VERDE AGUA",
+		"roll_no": 8,
+		"nw": 21.3,
+		"gw": 21.4,
+		"mts": 69.8
+	},
+	{
+		"color": "VERDE AGUA",
+		"roll_no": 9,
+		"nw": 31.5,
+		"gw": 31.6,
+		"mts": 101.9
+	},
+	{
+		"color": "VERDE AGUA",
+		"roll_no": 10,
+		"nw": 23.5,
+		"gw": 23.6,
+		"mts": 74.9
+	},
+	{
+		"color": "VERDE AGUA",
+		"roll_no": 11,
+		"nw": 34.6,
+		"gw": 34.7,
+		"mts": 112.4
+	},
+	{
+		"color": "VERDE AGUA",
+		"roll_no": 12,
+		"nw": 31.7,
+		"gw": 31.8,
+		"mts": 104
+	},
+	{
+		"color": "VERDE AGUA",
+		"roll_no": 13,
+		"nw": 35.4,
+		"gw": 35.5,
+		"mts": 117.7
+	},
+	{
+		"color": "VERDE AGUA",
+		"roll_no": 14,
+		"nw": 25.8,
+		"gw": 25.9,
+		"mts": 86
+	},
+	{
+		"color": "VERDE AGUA",
+		"roll_no": 15,
+		"nw": 34.6,
+		"gw": 34.7,
+		"mts": 117.2
+	},
+	{
+		"color": "VERDE AGUA",
+		"roll_no": 16,
+		"nw": 31.2,
+		"gw": 31.3,
+		"mts": 102.9
+	},
+	{
+		"color": "VERDE AGUA",
+		"roll_no": 17,
+		"nw": 27.8,
+		"gw": 27.9,
+		"mts": 91
+	}
+]
