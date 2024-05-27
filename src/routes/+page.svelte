@@ -1,7 +1,7 @@
 <script>
-// @ts-nocheck
-
+  // @ts-nocheck
   import { supabase } from '$lib/supabaseClient';
+  import { onMount } from 'svelte';
 
   export let data = { data: [] }; // Initialize with an empty array to avoid undefined errors
 
@@ -44,6 +44,20 @@
       currentItem = null;
     }
   }
+
+  // Fetch the latest data from the server when the component mounts
+  onMount(async () => {
+    const { data: loadedData, error } = await supabase
+      .from('cfx_temp_insumos_inventario')
+      .select('*')
+      .order('descripcion', { ascending: true });
+
+    if (error) {
+      console.error('Error fetching data:', error);
+    } else {
+      data = { data: loadedData };
+    }
+  });
 </script>
 
 <style>
