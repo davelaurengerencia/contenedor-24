@@ -1,82 +1,134 @@
 <script>
+  import { supabase } from '$lib/supabaseClient';
   import { onMount } from 'svelte';
-  import rollosData from '$lib/data.json';
 
-  let rollos = rollosData;
-  let selectedColor = '';
-  let selectedRollo = null;
-  let filteredRollos = [];
-  let selectedNW = null;
-  let selectedMTS = null;
+  export let data;
 
-  $: filteredRollos = rollos.filter(rollo => rollo.color === selectedColor);
-  $: selectedNW = null; // Reset the displayed NW when color or roll changes
-  $: selectedMTS = null; // Reset the displayed MTS when color or roll changes
+  let searchTerm = '';
+  let filteredData = data.data;
+  let showModal = false;
+  let currentItem = null;
 
-  function handleColorChange(event) {
-    selectedColor = event.target.value;
-    selectedRollo = null; // Reset the rollo selection
+  $: filteredData = data.data.filter(item =>
+    item.descripcion.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  function confirmUpdate(item) {
+    currentItem = item;
+    showModal = true;
   }
 
-  function handleRolloChange(event) {
-    selectedRollo = event.target.value;
-  }
+  async function updateItem() {
+    if (currentItem) {
+      const { data: updatedItem, error } = await supabase
+        .from('cfx_temp_insumos_inventario')
+        .update({ is_checked: !currentItem.is_checked })
+        .eq('codigo', currentItem.codigo)
+        .select();
 
-  function buscarDatos() {
-    if (selectedRollo) {
-      const rollo = filteredRollos.find(rollo => rollo.roll_no === parseInt(selectedRollo));
-      if (rollo) {
-        selectedNW = rollo.nw;
-        selectedMTS = rollo.mts;
+      if (error) {
+        console.error(error);
+      } else {
+        // Find the index of the item to be updated in the data array
+        const index = data.data.findIndex(item => item.codigo === currentItem.codigo);
+        if (index !== -1) {
+          // Update the specific item in the data array
+          data.data[index] = updatedItem[0];
+          // Sort the updated data array alphabetically by descripcion
+          data.data.sort((a, b) => a.descripcion.localeCompare(b.descripcion));
+        }
       }
+
+      showModal = false;
+      currentItem = null;
     }
   }
 </script>
 
-<div class="container ">
-<h1 class="text-center p-4 bg-success text-light rounded fw-bold container ">CONTENEDOR 24</h1>
-</div>
-
-<div class="container">
-  <select id="color" class="form-select mb-2" aria-label="Select color" on:change={handleColorChange}>
-    <option selected disabled>Color</option>
-    {#each [...new Set(rollos.map(rollo => rollo.color))] as color}
-      <option value={color}>{color}</option>
-    {/each}
-  </select>
-
-  <select id="rollo" class="form-select mb-2" aria-label="Select roll number" on:change={handleRolloChange} disabled={!selectedColor}>
-    <option selected disabled>#Rollo</option>
-    {#if filteredRollos.length > 0}
-      {#each filteredRollos as rollo}
-        <option value={rollo.roll_no}>{rollo.roll_no}</option>
-      {/each}
-    {/if}
-  </select>
-
-  <button class="btn btn-primary mb-2 btn-lg" on:click={buscarDatos} disabled={!selectedRollo}> 
-    BUSCAR
-  </button>
-
-  {#if selectedNW !== null && selectedMTS !== null}
-    <div class="text-center fs-1 bg-danger rounded text-light mb-2">
-      MTS: {selectedMTS}
-    </div>
-    <div class="text-center fs-1 bg-warning rounded text-light">
-      KG: {selectedNW}
-    </div>
-  {/if}
-</div>
-
 <style>
-  .btn-lg {
+  /* Your existing styles */
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  .list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  .checked {
+    color: green;
+  }
+  .unchecked {
+    color: red;
+  }
+  .search {
     width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
   }
-  .bg-warning {
-    padding: 1rem;
+
+  /* Modal styles */
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
   }
-  .bg-danger {
-    padding: 1rem;
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  .modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
   }
 </style>
 
+<input
+  class="search"
+  type="text"
+  placeholder="Buscar..."
+  bind:value={searchTerm}
+/>
+
+<ul>
+  {#each filteredData as item}
+    <li class="list-item" on:click={() => confirmUpdate(item)}>
+      <span>{item.descripcion}</span>
+      <span class={item.is_checked ? 'checked' : 'unchecked'}>
+        {#if item.is_checked}
+          ✅
+        {:else}
+          ❌
+        {/if}
+      </span>
+    </li>
+  {/each}
+</ul>
+
+{#if showModal}
+  <div class="modal">
+    <div class="modal-content">
+      <p>¿Confirmar la actualización del estado del item?</p>
+      <div class="modal-buttons">
+        <button on:click={updateItem}>Confirmar</button>
+        <button on:click={() => showModal = false}>Cancelar</button>
+      </div>
+    </div>
+  </div>
+{/if}
