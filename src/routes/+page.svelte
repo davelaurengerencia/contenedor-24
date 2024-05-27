@@ -2,12 +2,28 @@
   import { supabase } from '$lib/supabaseClient';
   import { onMount } from 'svelte';
 
-  export let data;
+  export let data = { data: [] }; // Initialize with an empty array to avoid undefined errors
 
   let searchTerm = '';
   let filteredData = data.data;
   let showModal = false;
   let currentItem = null;
+
+  // Load data from Supabase on component mount
+  async function loadData() {
+    const { data: loadedData, error } = await supabase
+      .from('cfx_temp_insumos_inventario')
+      .select('*')
+      .order('descripcion', { ascending: true });
+
+    if (error) {
+      console.error('Error fetching data:', error);
+    } else {
+      data = { data: loadedData };
+    }
+  }
+
+  onMount(loadData);
 
   $: filteredData = data.data.filter(item =>
     item.descripcion.toLowerCase().includes(searchTerm.toLowerCase())
@@ -45,6 +61,61 @@
   }
 </script>
 
+<style>
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  .list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  .checked {
+    color: green;
+  }
+  .unchecked {
+    color: red;
+  }
+  .search {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 1000;
+  }
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  .modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+</style>
+
 <input
   class="search"
   type="text"
@@ -78,64 +149,3 @@
     </div>
   </div>
 {/if}
-
-
-
-
-<style>
-  /* Your existing styles */
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  .list-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 10px;
-  }
-  .checked {
-    color: green;
-  }
-  .unchecked {
-    color: red;
-  }
-  .search {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    position: sticky;
-    top: 0;
-    background: white; /* Ensure the background color matches your page */
-    z-index: 1000; /* Make sure it's above other content */
-  }
-
-  /* Modal styles */
-  .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.5);
-  }
-  .modal-content {
-    background: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  }
-  .modal-buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-  }
-</style>
