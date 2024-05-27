@@ -72,6 +72,10 @@
     margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    position: sticky;
+    top: 0;
+    background: white; /* Ensure the background color matches your page */
+    z-index: 1000; /* Make sure it's above other content */
   }
 
   /* Modal styles */
