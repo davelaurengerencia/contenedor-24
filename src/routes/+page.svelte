@@ -8,7 +8,9 @@
   let searchTerm = '';
   let filteredData = data.data;
   let showModal = false;
+  let showAddModal = false;
   let currentItem = null;
+  let newDescription = '';
 
   $: filteredData = data.data.filter(item =>
     item.descripcion.toLowerCase().includes(searchTerm.toLowerCase())
@@ -42,6 +44,22 @@
 
       showModal = false;
       currentItem = null;
+    }
+  }
+
+  async function addItem() {
+    const { data: newItem, error } = await supabase
+      .from('cfx_temp_insumos_inventario')
+      .insert([{ descripcion: newDescription, is_checked: false }])
+      .select();
+
+    if (error) {
+      console.error('Error adding new item:', error);
+    } else {
+      data.data.push(newItem[0]);
+      data.data.sort((a, b) => a.descripcion.localeCompare(b.descripcion));
+      newDescription = '';
+      showAddModal = false;
     }
   }
 
@@ -113,6 +131,22 @@
     justify-content: flex-end;
     gap: 10px;
   }
+  .fab {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 56px;
+    height: 56px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
 </style>
 
 <input
@@ -152,6 +186,23 @@
       <div class="modal-buttons">
         <button on:click={updateItem}>Confirmar</button>
         <button on:click={() => showModal = false}>Cancelar</button>
+      </div>
+    </div>
+  </div>
+{/if}
+
+<div class="fab" on:click={() => showAddModal = true}>
+  +
+</div>
+
+{#if showAddModal}
+  <div class="modal">
+    <div class="modal-content">
+      <h3>Agregar Nuevo Item</h3>
+      <input type="text" placeholder="Descripción" bind:value={newDescription} />
+      <div class="modal-buttons">
+        <button on:click={addItem}>Agregar</button>
+        <button on:click={() => showAddModal = false}>Cancelar</button>
       </div>
     </div>
   </div>
