@@ -36,7 +36,7 @@
           // Update the specific item in the data array
           data.data[index] = updatedItem[0];
           // Sort the updated data array alphabetically by descripcion
-          //data.data.sort((a, b) => a.descripcion.localeCompare(b.descripcion));
+          data.data.sort((a, b) => a.descripcion.localeCompare(b.descripcion));
         }
       }
 
@@ -142,7 +142,13 @@
 {#if showModal}
   <div class="modal">
     <div class="modal-content">
-      <p>¿Confirmar la actualización del estado del item?</p>
+      <p>
+        {#if currentItem && currentItem.is_checked}
+          Cambiar de ✅ a ❌
+        {:else}
+          Cambiar de ❌ a ✅
+        {/if}
+      </p>
       <div class="modal-buttons">
         <button on:click={updateItem}>Confirmar</button>
         <button on:click={() => showModal = false}>Cancelar</button>
