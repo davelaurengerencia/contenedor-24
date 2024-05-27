@@ -1,4 +1,6 @@
 <script>
+// @ts-nocheck
+
   import { supabase } from '$lib/supabaseClient';
 
   export let data = { data: [] }; // Initialize with an empty array to avoid undefined errors
@@ -34,7 +36,7 @@
           // Update the specific item in the data array
           data.data[index] = updatedItem[0];
           // Sort the updated data array alphabetically by descripcion
-          data.data.sort((a, b) => a.descripcion.localeCompare(b.descripcion));
+          //data.data.sort((a, b) => a.descripcion.localeCompare(b.descripcion));
         }
       }
 
@@ -108,6 +110,8 @@
 
 <ul>
   {#each filteredData as item}
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
     <li class="list-item" on:click={() => confirmUpdate(item)}>
       <span>{item.descripcion}</span>
       <span class={item.is_checked ? 'checked' : 'unchecked'}>
