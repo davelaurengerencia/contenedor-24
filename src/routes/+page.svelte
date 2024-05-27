@@ -45,6 +45,43 @@
   }
 </script>
 
+<input
+  class="search"
+  type="text"
+  placeholder="Buscar..."
+  bind:value={searchTerm}
+/>
+
+<ul>
+  {#each filteredData as item}
+    <li class="list-item" on:click={() => confirmUpdate(item)}>
+      <span>{item.descripcion}</span>
+      <span class={item.is_checked ? 'checked' : 'unchecked'}>
+        {#if item.is_checked}
+          ✅
+        {:else}
+          ❌
+        {/if}
+      </span>
+    </li>
+  {/each}
+</ul>
+
+{#if showModal}
+  <div class="modal">
+    <div class="modal-content">
+      <p>¿Confirmar la actualización del estado del item?</p>
+      <div class="modal-buttons">
+        <button on:click={updateItem}>Confirmar</button>
+        <button on:click={() => showModal = false}>Cancelar</button>
+      </div>
+    </div>
+  </div>
+{/if}
+
+
+
+
 <style>
   /* Your existing styles */
   ul {
@@ -102,37 +139,3 @@
     gap: 10px;
   }
 </style>
-
-<input
-  class="search"
-  type="text"
-  placeholder="Buscar..."
-  bind:value={searchTerm}
-/>
-
-<ul>
-  {#each filteredData as item}
-    <li class="list-item" on:click={() => confirmUpdate(item)}>
-      <span>{item.descripcion}</span>
-      <span class={item.is_checked ? 'checked' : 'unchecked'}>
-        {#if item.is_checked}
-          ✅
-        {:else}
-          ❌
-        {/if}
-      </span>
-    </li>
-  {/each}
-</ul>
-
-{#if showModal}
-  <div class="modal">
-    <div class="modal-content">
-      <p>¿Confirmar la actualización del estado del item?</p>
-      <div class="modal-buttons">
-        <button on:click={updateItem}>Confirmar</button>
-        <button on:click={() => showModal = false}>Cancelar</button>
-      </div>
-    </div>
-  </div>
-{/if}
