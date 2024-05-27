@@ -1,6 +1,5 @@
 <script>
   import { supabase } from '$lib/supabaseClient';
-  import { onMount } from 'svelte';
 
   export let data = { data: [] }; // Initialize with an empty array to avoid undefined errors
 
@@ -8,22 +7,6 @@
   let filteredData = data.data;
   let showModal = false;
   let currentItem = null;
-
-  // Load data from Supabase on component mount
-  async function loadData() {
-    const { data: loadedData, error } = await supabase
-      .from('cfx_temp_insumos_inventario')
-      .select('*')
-      .order('descripcion', { ascending: true });
-
-    if (error) {
-      console.error('Error fetching data:', error);
-    } else {
-      data = { data: loadedData };
-    }
-  }
-
-  onMount(loadData);
 
   $: filteredData = data.data.filter(item =>
     item.descripcion.toLowerCase().includes(searchTerm.toLowerCase())
